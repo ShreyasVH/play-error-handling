@@ -3,3 +3,8 @@
 target
 project/target
 project/project
+.DS_Store
+dist/
+compile.log
+compile2.log
+server.log
