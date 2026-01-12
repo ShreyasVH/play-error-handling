@@ -1,25 +1,47 @@
 package repositories;
 
-import io.ebean.DB;
+import com.google.inject.Inject;
+import jakarta.persistence.NoResultException;
 import models.db.Book;
 import models.requests.CreateRequest;
 import models.requests.UpdateRequest;
+import play.db.jpa.JPAApi;
 
 import java.util.List;
 
 public class BookRepository {
+    private final JPAApi jpaApi;
+
+    @Inject
+    public BookRepository(JPAApi jpaApi) {
+        this.jpaApi = jpaApi;
+    }
+
     public Book create(CreateRequest request) {
         Book book = new Book(request);
-        DB.save(book);
-        return book;
+
+        return jpaApi.withTransaction(em -> {
+            em.persist(book);
+            return book;
+        });
     }
 
     public List<Book> list() {
-        return DB.find(Book.class).findList();
+        return jpaApi.withTransaction(em -> {
+            return em.createQuery("select p from Book p", Book.class).getResultList();
+        });
     }
 
     public Book get(Long id) {
-        return DB.find(Book.class).where().eq("id", id).findOne();
+        return jpaApi.withTransaction(em -> {
+            try {
+                return em.createQuery("SELECT b FROM Book b WHERE b.id = :id", Book.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+            } catch (NoResultException ex) {
+                return null;
+            }
+        });
     }
 
     public Book update(Long id, UpdateRequest request) {
@@ -28,13 +50,17 @@ public class BookRepository {
         book.setName(request.getName());
         book.setAuthor(request.getAuthor());
 
-        DB.update(book);
+        jpaApi.withTransaction(em -> {
+            em.merge(book);
+        });
         return book;
     }
 
     public void delete(Long id) {
-        Book book = get(id);
+        jpaApi.withTransaction(em -> {
+            Book book = em.find(Book.class, id);
 
-        DB.delete(book);
+            em.remove(book);
+        });
     }
 }
