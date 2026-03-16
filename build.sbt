@@ -2,13 +2,13 @@ name := "play-error-handling"
 
 version := "1.0.0"
 
-scalaVersion := "3.8.1"
+scalaVersion := "3.8.2"
 
 libraryDependencies += guice
 libraryDependencies += javaJpa
-libraryDependencies += "org.projectlombok" % "lombok" % "1.18.42" % "provided"
+libraryDependencies += "org.projectlombok" % "lombok" % "1.18.44" % "provided"
 libraryDependencies += "com.mysql" % "mysql-connector-j" % "9.6.0"
-libraryDependencies += "org.hibernate.orm" % "hibernate-core" % "7.2.4.Final"
+libraryDependencies += "org.hibernate.orm" % "hibernate-core" % "7.2.7.Final"
 
 Compile / javacOptions ++= Seq("-proc:full")
 
