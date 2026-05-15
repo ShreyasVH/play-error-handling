@@ -3,6 +3,7 @@ export PATH=
 
 # java 26.0.1 path
 export PATH=
+export JAVA_HOME=
 
 export PORT=
 
@@ -17,4 +18,3 @@ export MYSQL_DB=
 export MYSQL_USER=
 export MYSQL_PASSWORD=
 export MYSQL_VERSION=
-
