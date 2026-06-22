@@ -8,7 +8,7 @@ libraryDependencies += guice
 libraryDependencies += javaJpa
 libraryDependencies += "org.projectlombok" % "lombok" % "1.18.46" % "provided"
 libraryDependencies += "com.mysql" % "mysql-connector-j" % "9.7.0"
-libraryDependencies += "org.hibernate.orm" % "hibernate-core" % "7.4.1.Final"
+libraryDependencies += "org.hibernate.orm" % "hibernate-core" % "7.4.2.Final"
 
 Compile / javacOptions ++= Seq("-proc:full")
 
